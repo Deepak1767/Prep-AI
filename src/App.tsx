@@ -1,9 +1,30 @@
-import React from 'react'
-import { Button } from './components/ui/button'
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "@/routes/home";
+import PublicLayout from "./layouts/public-layout";
+import AuthLayout from "./layouts/auth-layout";
+import SignInPage from "./routes/sign-in";
+import SignUpPage from "./routes/sign-up";
+import ProtectRoutes from "./layouts/protected-routes";
+import MainLayout from "./layouts/main-layout";
 const App = () => {
   return (
-    <div className='text-blue-500'>App</div>
+    <Router>
+      <Routes>
+        {/*public routes */}
+        <Route element={<PublicLayout/>}>
+          <Route index element={<HomePage />} />
+        </Route>
+
+        {/*authentication layout */}
+        <Route element={<AuthLayout/>}>
+          <Route path="/signin/*" element={<SignInPage />} />
+          <Route path="/signup/*" element={<SignUpPage />} />
+        </Route>
+
+        {/*protected routes */}
+        <Route element={<ProtectRoutes><MainLayout/></ProtectRoutes>}></Route>
+      </Routes>
+    </Router>
   )
 }
 
